@@ -1,0 +1,140 @@
+Software Requirements Specification (SRS)
+Project Title: Classical Arabic Poetry Management System
+Type: Java-based Desktop Application
+Architecture: 3-Layered Architecture (Presentation, Business Logic, Data Access)
+Database: MySQL
+1. Introduction
+1.1 Purpose
+The purpose of this system is to provide a structured platform for storing, managing, and analyzing classical Arabic poems in a fine-grained, verse-by-verse manner. It will allow users to explore poems by poet, book, and theme while also enabling advanced linguistic processing (tokenization, lemmatization, and rooting).
+1.2 Scope
+The application will provide features for:
+•	Managing books, poets, and poems.
+•	Storing and displaying poems verse by verse.
+•	Adding translations, notes, and parallel diacritized versions for verses.
+•	Tokenizing verses into words (tokens) and associating them with lemmas and roots.
+•	Searching across tokens, lemmas, and roots.
+•	Viewing occurrences of a token/lemma/root across all verses.
+This is a Java desktop application following a 3-layered architecture and using MySQL for persistent storage.
+1.3 Definitions, Acronyms, and Abbreviations
+•	Token: Word form without diacritics, extracted from a verse.
+•	Lemma: Dictionary form of a token.
+•	Root: The 3–4 letter base form from which lemmas/tokens derive.
+•	CRUD: Create, Read, Update, Delete operations.
+1.4 References
+Reference books to be imported: ديوان الحماسة, المفضليات, الأصمعيات.
+2. Overall Description
+2.1 Product Perspective
+This is a standalone desktop application, with MySQL as the database. It uses a 3-layered architecture:
+•	Presentation Layer (UI): Java Swing/JavaFX forms.
+•	Business Logic Layer (BLL): Application logic, validation, and processing.
+•	Data Access Layer (DAL): Database access via JDBC.
+2.2 Product Functions
+•	Manage books, poets, poems, and verses.
+•	Add translations, notes, and diacritized versions for verses.
+•	Tokenize verses and manage tokens, lemmas, and roots.
+•	Provide search capabilities at book, poem, verse, token, lemma, and root levels.
+•	Allow concordance view: click on a word to see all occurrences across the corpus.
+2.3 User Characteristics
+•	Users are expected to have basic computer literacy.
+•	Primary users may be students, researchers, or literature enthusiasts.
+2.4 Constraints
+•	Must be implemented in Java.
+•	Must use MySQL as backend.
+•	Must follow 3-layered architecture.
+•	Must support Arabic Unicode (UTF-8).
+2.5 Assumptions and Dependencies
+•	Input texts are in Classical Arabic.
+•	Diacritics are optional and not used in tokens.
+•	System will initially run on Windows environments.
+3. Functional Requirements
+Core Management
+•	FR1: Manage Books (CRUD).
+•	FR2: Manage Poets (CRUD).
+•	FR3: Manage Poems (CRUD, link to poet and book).
+•	FR4: Manage Verses (CRUD, link to poem).
+Verse Enhancements
+•	FR5: Add/Edit Verse Notes.
+•	FR6: Add/Edit Verse Translations.
+•	FR7: Add Diacritized Version of Verse.
+Linguistic Processing
+•	FR8: Tokenize Verses (store tokens without diacritics).
+•	FR9: Associate Tokens → Lemmas.
+•	FR10: Associate Lemmas → Roots.
+Search & Retrieval
+•	FR11: Search Poems by book, poet, or title.
+•	FR12: Search within Verses (by keyword, notes, translations).
+•	FR13: Search Tokens (find all verses containing a token).
+•	FR14: Search Lemmas (find all verses containing a lemma).
+•	FR15: Search Roots (find all verses containing a root).
+•	FR16: Click Word in Verse to show occurrences at token, lemma, and root levels.
+4. External Interface Requirements
+4.1 User Interface
+•	Java Swing/JavaFX GUI forms.
+•	Arabic-compatible text boxes, tables, and displays.
+4.2 Database Interface
+•	MySQL database accessed via JDBC.
+4.3 Hardware Interfaces
+•	Standard PC/laptop with at least 4GB RAM.
+5. Non-Functional Requirements
+•	Performance: Retrieval of a poem up to 500 verses in ≤ 2 seconds.
+•	Reliability: Persistent storage in MySQL.
+•	Usability: Must render Arabic properly (UTF-8).
+•	Maintainability: Clean separation of concerns across 3 layers.
+•	Security: User login for CRUD operations.
+6. Database Entities (High-Level)
+•	Book: book_id, title, compiler, era.
+•	Poet: poet_id, name, biography.
+•	Poem: poem_id, title, poet_id (FK), book_id (FK).
+•	Verse: verse_id, poem_id (FK), verse_number, text, text_diacritized, translation, notes.
+•	Token: token_id, surface_form, verse_id (FK), position.
+•	Lemma: lemma_id, lemma_form.
+•	Root: root_id, root_form.
+•	Relations:
+o	token_lemma (token_id → lemma_id).
+o	lemma_root (lemma_id → root_id).
+7. Use Cases (Titles Only)
+Independent
+1.	Manage Books
+2.	Manage Poets
+3.	Manage Poems
+4.	Manage Verses
+5.	Manage Users & Authentication
+Dependent
+6.	Add/Edit Verse Notes
+7.	Add/Edit Verse Translations
+8.	Add Diacritized Version
+9.	Tokenize Verses
+10.	Manage Tokens
+11.	Manage Lemmas
+12.	Manage Roots
+13.	Search Poems
+14.	Search Verses
+15.	Search Tokens
+16.	Search Lemmas
+17.	Search Roots
+18.	Click Word to Show Occurrences
+8. Work Division Strategy (Parallel-Friendly)
+Student A – Books & Poems Module
+•	Manage Books
+•	Manage Poets
+•	Manage Poems
+•	Search Poems
+•	View Poem Hierarchy (Book → Poem → Verses)
+End-to-end slice: Focus on catalog management and navigation.
+Student B – Verses & Annotations Module
+•	Manage Verses
+•	Add/Edit Verse Notes
+•	Add/Edit Verse Translations
+•	Add Diacritized Version
+•	Search within Verses (keyword, notes, translations)
+End-to-end slice: Focus on verse content and enrichment.
+Student C – Linguistic Processing & Concordance Module
+•	Tokenize Verses
+•	Manage Tokens
+•	Manage Lemmas
+•	Manage Roots
+•	Search Tokens
+•	Search Lemmas
+•	Search Roots
+•	Click Word in Verse to Show Occurrences
+End-to-end slice: Focus on computational linguistics and concordance.
