@@ -81,14 +81,12 @@ public class PoemManagementFrame extends JFrame {
         fieldsPanel.add(new JLabel("Poet:"), gbc);
         gbc.gridx = 1; gbc.weightx = 1.0;
         poetCombo = new JComboBox<>();
-        poetCombo.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         fieldsPanel.add(poetCombo, gbc);
 
         gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
         fieldsPanel.add(new JLabel("Book:"), gbc);
         gbc.gridx = 1; gbc.weightx = 1.0;
         bookCombo = new JComboBox<>();
-        bookCombo.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         fieldsPanel.add(bookCombo, gbc);
 
         panel.add(fieldsPanel, BorderLayout.CENTER);

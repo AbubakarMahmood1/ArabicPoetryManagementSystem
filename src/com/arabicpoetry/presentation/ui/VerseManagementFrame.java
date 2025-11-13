@@ -70,7 +70,6 @@ public class VerseManagementFrame extends JFrame {
         fieldsPanel.add(new JLabel("Poem:"), gbc);
         gbc.gridx = 1; gbc.weightx = 1.0;
         poemCombo = new JComboBox<>();
-        poemCombo.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         poemCombo.addActionListener(e -> loadVersesByPoem());
         fieldsPanel.add(poemCombo, gbc);
 
