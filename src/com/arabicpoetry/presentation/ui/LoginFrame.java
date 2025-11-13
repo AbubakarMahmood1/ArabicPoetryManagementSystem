@@ -6,17 +6,22 @@ import com.arabicpoetry.model.User;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 /**
  * Login form for user authentication
  */
 public class LoginFrame extends JFrame {
-    private JTextField usernameField;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2966244808201739161L;
+	private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private AuthenticationService authService;
 
-    public LoginFrame() {
+    public LoginFrame() throws SQLException {
         authService = AuthenticationService.getInstance();
         initializeComponents();
     }
@@ -130,7 +135,12 @@ public class LoginFrame extends JFrame {
                 e.printStackTrace();
             }
 
-            new LoginFrame().setVisible(true);
+            try {
+				new LoginFrame().setVisible(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         });
     }
 }

@@ -16,14 +16,15 @@ public class BookService {
     private BookDAO bookDAO;
 
     // Private constructor for Singleton pattern
-    private BookService() {
+    private BookService() throws SQLException {
         this.bookDAO = DAOFactory.getInstance().getBookDAO();
     }
 
     /**
      * Get singleton instance
+     * @throws SQLException 
      */
-    public static synchronized BookService getInstance() {
+    public static synchronized BookService getInstance() throws SQLException {
         if (instance == null) {
             instance = new BookService();
         }

@@ -14,7 +14,7 @@ import java.util.List;
 public class BookDAOImpl implements BookDAO {
     private Connection connection;
 
-    public BookDAOImpl() {
+    public BookDAOImpl() throws SQLException {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 

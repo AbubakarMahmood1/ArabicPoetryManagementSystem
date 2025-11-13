@@ -16,14 +16,15 @@ public class VerseService {
     private VerseDAO verseDAO;
 
     // Private constructor for Singleton pattern
-    private VerseService() {
+    private VerseService() throws SQLException {
         this.verseDAO = DAOFactory.getInstance().getVerseDAO();
     }
 
     /**
      * Get singleton instance
+     * @throws SQLException 
      */
-    public static synchronized VerseService getInstance() {
+    public static synchronized VerseService getInstance() throws SQLException {
         if (instance == null) {
             instance = new VerseService();
         }

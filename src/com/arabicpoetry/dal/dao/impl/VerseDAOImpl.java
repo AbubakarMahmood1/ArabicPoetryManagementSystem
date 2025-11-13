@@ -14,7 +14,7 @@ import java.util.List;
 public class VerseDAOImpl implements VerseDAO {
     private Connection connection;
 
-    public VerseDAOImpl() {
+    public VerseDAOImpl() throws SQLException {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 

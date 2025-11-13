@@ -14,7 +14,7 @@ import java.util.List;
 public class PoetDAOImpl implements PoetDAO {
     private Connection connection;
 
-    public PoetDAOImpl() {
+    public PoetDAOImpl() throws SQLException {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 

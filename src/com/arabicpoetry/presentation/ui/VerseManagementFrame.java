@@ -8,13 +8,18 @@ import com.arabicpoetry.model.Verse;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Verse Management Frame - CRUD operations for verses
  */
 public class VerseManagementFrame extends JFrame {
-    private VerseService verseService;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6572842841263429150L;
+	private VerseService verseService;
     private PoemService poemService;
 
     private JTable verseTable;
@@ -26,7 +31,7 @@ public class VerseManagementFrame extends JFrame {
 
     private Verse selectedVerse = null;
 
-    public VerseManagementFrame() {
+    public VerseManagementFrame() throws SQLException {
         verseService = VerseService.getInstance();
         poemService = PoemService.getInstance();
         initializeComponents();
@@ -127,7 +132,12 @@ public class VerseManagementFrame extends JFrame {
 
         String[] columns = {"ID", "Poem", "Verse #", "Text"};
         tableModel = new DefaultTableModel(columns, 0) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7026991988557907303L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }

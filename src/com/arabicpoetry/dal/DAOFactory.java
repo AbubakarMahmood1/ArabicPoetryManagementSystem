@@ -1,5 +1,7 @@
 package com.arabicpoetry.dal;
 
+import java.sql.SQLException;
+
 import com.arabicpoetry.dal.dao.*;
 import com.arabicpoetry.dal.dao.impl.*;
 
@@ -34,8 +36,9 @@ public class DAOFactory {
 
     /**
      * Get UserDAO instance
+     * @throws SQLException 
      */
-    public UserDAO getUserDAO() {
+    public UserDAO getUserDAO() throws SQLException {
         if (userDAO == null) {
             userDAO = new UserDAOImpl();
         }
@@ -44,8 +47,9 @@ public class DAOFactory {
 
     /**
      * Get BookDAO instance
+     * @throws SQLException 
      */
-    public BookDAO getBookDAO() {
+    public BookDAO getBookDAO() throws SQLException {
         if (bookDAO == null) {
             bookDAO = new BookDAOImpl();
         }
@@ -54,8 +58,9 @@ public class DAOFactory {
 
     /**
      * Get PoetDAO instance
+     * @throws SQLException 
      */
-    public PoetDAO getPoetDAO() {
+    public PoetDAO getPoetDAO() throws SQLException {
         if (poetDAO == null) {
             poetDAO = new PoetDAOImpl();
         }
@@ -64,8 +69,9 @@ public class DAOFactory {
 
     /**
      * Get PoemDAO instance
+     * @throws SQLException 
      */
-    public PoemDAO getPoemDAO() {
+    public PoemDAO getPoemDAO() throws SQLException {
         if (poemDAO == null) {
             poemDAO = new PoemDAOImpl();
         }
@@ -74,8 +80,9 @@ public class DAOFactory {
 
     /**
      * Get VerseDAO instance
+     * @throws SQLException 
      */
-    public VerseDAO getVerseDAO() {
+    public VerseDAO getVerseDAO() throws SQLException {
         if (verseDAO == null) {
             verseDAO = new VerseDAOImpl();
         }

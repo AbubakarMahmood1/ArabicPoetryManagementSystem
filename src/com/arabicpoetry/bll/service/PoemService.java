@@ -16,14 +16,15 @@ public class PoemService {
     private PoemDAO poemDAO;
 
     // Private constructor for Singleton pattern
-    private PoemService() {
+    private PoemService() throws SQLException {
         this.poemDAO = DAOFactory.getInstance().getPoemDAO();
     }
 
     /**
      * Get singleton instance
+     * @throws SQLException 
      */
-    public static synchronized PoemService getInstance() {
+    public static synchronized PoemService getInstance() throws SQLException {
         if (instance == null) {
             instance = new PoemService();
         }

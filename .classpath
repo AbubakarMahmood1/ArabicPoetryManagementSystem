@@ -7,5 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry kind="lib" path="C:/Users/theab/OneDrive/Desktop/New Folder/ArabicPoetryManagementSystem/lib/AlKhalilMorphoSys2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/theab/OneDrive/Desktop/New Folder/ArabicPoetryManagementSystem/lib/mysql-connector-j-9.5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

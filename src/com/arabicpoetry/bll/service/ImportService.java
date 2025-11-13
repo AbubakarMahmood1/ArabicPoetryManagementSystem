@@ -35,7 +35,7 @@ public class ImportService {
     private static final String PAGE_DELIMITER = "==========";
 
     // Private constructor for Singleton pattern
-    private ImportService() {
+    private ImportService() throws SQLException {
         this.bookService = BookService.getInstance();
         this.poetService = PoetService.getInstance();
         this.poemService = PoemService.getInstance();
@@ -44,8 +44,9 @@ public class ImportService {
 
     /**
      * Get singleton instance
+     * @throws SQLException 
      */
-    public static synchronized ImportService getInstance() {
+    public static synchronized ImportService getInstance() throws SQLException {
         if (instance == null) {
             instance = new ImportService();
         }

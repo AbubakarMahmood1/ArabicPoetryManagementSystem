@@ -17,14 +17,15 @@ public class AuthenticationService {
     private User currentUser;
 
     // Private constructor for Singleton pattern
-    private AuthenticationService() {
+    private AuthenticationService() throws SQLException {
         this.userDAO = DAOFactory.getInstance().getUserDAO();
     }
 
     /**
      * Get singleton instance
+     * @throws SQLException 
      */
-    public static synchronized AuthenticationService getInstance() {
+    public static synchronized AuthenticationService getInstance() throws SQLException {
         if (instance == null) {
             instance = new AuthenticationService();
         }

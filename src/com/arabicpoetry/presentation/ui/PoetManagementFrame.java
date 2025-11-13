@@ -6,13 +6,18 @@ import com.arabicpoetry.model.Poet;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Poet Management Frame - CRUD operations for poets
  */
 public class PoetManagementFrame extends JFrame {
-    private PoetService poetService;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7248656872127107203L;
+	private PoetService poetService;
     private JTable poetTable;
     private DefaultTableModel tableModel;
     private JTextField nameField, birthYearField, deathYearField, searchField;
@@ -21,7 +26,7 @@ public class PoetManagementFrame extends JFrame {
 
     private Poet selectedPoet = null;
 
-    public PoetManagementFrame() {
+    public PoetManagementFrame() throws SQLException {
         poetService = PoetService.getInstance();
         initializeComponents();
         loadPoets();
@@ -127,7 +132,12 @@ public class PoetManagementFrame extends JFrame {
 
         String[] columns = {"ID", "Name", "Birth Year", "Death Year"};
         tableModel = new DefaultTableModel(columns, 0) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4468267769229484825L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }

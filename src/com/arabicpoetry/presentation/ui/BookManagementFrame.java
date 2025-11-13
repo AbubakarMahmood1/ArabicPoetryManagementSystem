@@ -6,13 +6,18 @@ import com.arabicpoetry.model.Book;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Book Management Frame - CRUD operations for books
  */
 public class BookManagementFrame extends JFrame {
-    private BookService bookService;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2029426852972658474L;
+	private BookService bookService;
     private JTable bookTable;
     private DefaultTableModel tableModel;
     private JTextField titleField, compilerField, eraField, searchField;
@@ -21,7 +26,7 @@ public class BookManagementFrame extends JFrame {
 
     private Book selectedBook = null;
 
-    public BookManagementFrame() {
+    public BookManagementFrame() throws SQLException {
         bookService = BookService.getInstance();
         initializeComponents();
         loadBooks();
@@ -136,7 +141,12 @@ public class BookManagementFrame extends JFrame {
         // Table
         String[] columns = {"ID", "Title", "Compiler", "Era"};
         tableModel = new DefaultTableModel(columns, 0) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -3103938184524725215L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -304,7 +314,12 @@ public class BookManagementFrame extends JFrame {
 
     // Custom cell renderer for RTL text
     static class RightAlignedTableCellRenderer extends javax.swing.table.DefaultTableCellRenderer {
-        public RightAlignedTableCellRenderer() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -2050899812066286645L;
+
+		public RightAlignedTableCellRenderer() {
             setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         }
     }

@@ -3,6 +3,8 @@ package com.arabicpoetry;
 import com.arabicpoetry.presentation.ui.LoginFrame;
 import com.arabicpoetry.util.DatabaseConnection;
 
+import java.sql.SQLException;
+
 import javax.swing.*;
 
 /**
@@ -30,7 +32,13 @@ public class Main {
 
         // Start the application with login screen
         SwingUtilities.invokeLater(() -> {
-            LoginFrame loginFrame = new LoginFrame();
+            LoginFrame loginFrame = null;
+			try {
+				loginFrame = new LoginFrame();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             loginFrame.setVisible(true);
         });
     }

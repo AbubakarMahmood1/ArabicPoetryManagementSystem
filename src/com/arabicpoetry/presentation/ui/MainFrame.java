@@ -7,15 +7,20 @@ import com.arabicpoetry.model.User;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.sql.SQLException;
 
 /**
  * Main application window with menu for accessing all features
  */
 public class MainFrame extends JFrame {
-    private AuthenticationService authService;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3651246938860820528L;
+	private AuthenticationService authService;
     private ImportService importService;
 
-    public MainFrame() {
+    public MainFrame() throws SQLException {
         authService = AuthenticationService.getInstance();
         importService = ImportService.getInstance();
         initializeComponents();
@@ -44,13 +49,41 @@ public class MainFrame extends JFrame {
         // Manage menu
         JMenu manageMenu = new JMenu("Manage");
         JMenuItem booksItem = new JMenuItem("Manage Books");
-        booksItem.addActionListener(e -> new BookManagementFrame().setVisible(true));
+        booksItem.addActionListener(e -> {
+			try {
+				new BookManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         JMenuItem poetsItem = new JMenuItem("Manage Poets");
-        poetsItem.addActionListener(e -> new PoetManagementFrame().setVisible(true));
+        poetsItem.addActionListener(e -> {
+			try {
+				new PoetManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         JMenuItem poemsItem = new JMenuItem("Manage Poems");
-        poemsItem.addActionListener(e -> new PoemManagementFrame().setVisible(true));
+        poemsItem.addActionListener(e -> {
+			try {
+				new PoemManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         JMenuItem versesItem = new JMenuItem("Manage Verses");
-        versesItem.addActionListener(e -> new VerseManagementFrame().setVisible(true));
+        versesItem.addActionListener(e -> {
+			try {
+				new VerseManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
         manageMenu.add(booksItem);
         manageMenu.add(poetsItem);
@@ -88,19 +121,47 @@ public class MainFrame extends JFrame {
 
         JButton booksButton = new JButton("Manage Books");
         booksButton.setFont(new Font("Arial", Font.BOLD, 14));
-        booksButton.addActionListener(e -> new BookManagementFrame().setVisible(true));
+        booksButton.addActionListener(e -> {
+			try {
+				new BookManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
         JButton poetsButton = new JButton("Manage Poets");
         poetsButton.setFont(new Font("Arial", Font.BOLD, 14));
-        poetsButton.addActionListener(e -> new PoetManagementFrame().setVisible(true));
+        poetsButton.addActionListener(e -> {
+			try {
+				new PoetManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
         JButton poemsButton = new JButton("Manage Poems");
         poemsButton.setFont(new Font("Arial", Font.BOLD, 14));
-        poemsButton.addActionListener(e -> new PoemManagementFrame().setVisible(true));
+        poemsButton.addActionListener(e -> {
+			try {
+				new PoemManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
         JButton versesButton = new JButton("Manage Verses");
         versesButton.setFont(new Font("Arial", Font.BOLD, 14));
-        versesButton.addActionListener(e -> new VerseManagementFrame().setVisible(true));
+        versesButton.addActionListener(e -> {
+			try {
+				new VerseManagementFrame().setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
         buttonPanel.add(booksButton);
         buttonPanel.add(poetsButton);
