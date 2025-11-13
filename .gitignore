@@ -1,0 +1,23 @@
+# Java related
+target/
+bin/
+*.jar
+*.war
+*.ear
+*.class
+
+# Eclipse specific
+.classpath
+.project
+.settings/
+.metadata/
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.externalToolBuilders/
+*.launch
