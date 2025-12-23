@@ -3,6 +3,8 @@ package com.arabicpoetry.dal.dao.impl;
 import com.arabicpoetry.dal.dao.BookDAO;
 import com.arabicpoetry.model.Book;
 import com.arabicpoetry.util.DatabaseConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,9 +15,14 @@ import java.util.List;
  */
 public class BookDAOImpl implements BookDAO {
     private Connection connection;
+    private static final Logger LOGGER = LogManager.getLogger(BookDAOImpl.class);
+
+    public BookDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     public BookDAOImpl() throws SQLException {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+        this(DatabaseConnection.getInstance().getConnection());
     }
 
     @Override
@@ -59,6 +66,7 @@ public class BookDAOImpl implements BookDAO {
                 book.setBookId(rs.getInt(1));
             }
         }
+        LOGGER.info("Inserted book '{}'", book.getTitle());
     }
 
     @Override
@@ -72,6 +80,7 @@ public class BookDAOImpl implements BookDAO {
             stmt.setInt(5, book.getBookId());
             stmt.executeUpdate();
         }
+        LOGGER.info("Updated book id={}", book.getBookId());
     }
 
     @Override
@@ -81,6 +90,7 @@ public class BookDAOImpl implements BookDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
+        LOGGER.info("Deleted book id={}", id);
     }
 
     @Override

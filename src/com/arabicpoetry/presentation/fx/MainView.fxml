@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.arabicpoetry.presentation.fx.MainController"
+            prefWidth="800" prefHeight="600">
+    <top>
+        <VBox spacing="6">
+            <MenuBar>
+                <Menu text="File">
+                    <MenuItem text="Import Poems from File" onAction="#handleImport"/>
+                    <MenuItem text="Exit" onAction="#handleExit"/>
+                </Menu>
+                <Menu text="Manage">
+                    <MenuItem text="Manage Books" onAction="#handleManageBooks"/>
+                    <MenuItem text="Manage Poets" onAction="#handleManagePoets"/>
+                    <MenuItem text="Manage Poems" onAction="#handleManagePoems"/>
+                    <MenuItem text="Manage Verses" onAction="#handleManageVerses"/>
+                    <MenuItem text="Linguistic Workbench" onAction="#handleLinguistics"/>
+                </Menu>
+                <Menu text="Analysis">
+                    <MenuItem text="Verse Similarity Search" onAction="#handleSimilarity"/>
+                    <MenuItem text="Frequency Analysis" onAction="#handleFrequency"/>
+                    <MenuItem text="Book Index Generator" onAction="#handleIndex"/>
+                </Menu>
+                <Menu text="Help">
+                    <MenuItem text="About" onAction="#handleAbout"/>
+                </Menu>
+            </MenuBar>
+            <HBox alignment="CENTER_LEFT" spacing="8" style="-fx-padding: 0 10 0 10;">
+                <Label text="User:"/>
+                <Label fx:id="userLabel" text="" style="-fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <Text text="Welcome to Arabic Poetry Management System"
+                  style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <Text text="Use the menu or quick actions below to manage books, poets, poems, verses, and analysis."
+                  wrappingWidth="600" textAlignment="CENTER"/>
+            <GridPane hgap="10" vgap="10">
+                <padding><Insets top="10" right="100" bottom="10" left="100"/></padding>
+                <Button text="Manage Books" onAction="#handleManageBooks" GridPane.rowIndex="0" GridPane.columnIndex="0" maxWidth="Infinity"/>
+                <Button text="Manage Poets" onAction="#handleManagePoets" GridPane.rowIndex="0" GridPane.columnIndex="1" maxWidth="Infinity"/>
+                <Button text="Manage Poems" onAction="#handleManagePoems" GridPane.rowIndex="1" GridPane.columnIndex="0" maxWidth="Infinity"/>
+                <Button text="Manage Verses" onAction="#handleManageVerses" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity"/>
+                <Button text="Linguistic Workbench" onAction="#handleLinguistics" GridPane.rowIndex="2" GridPane.columnIndex="0" maxWidth="Infinity"/>
+                <Button text="Frequency Analysis" onAction="#handleFrequency" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity"/>
+            </GridPane>
+        </VBox>
+    </center>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+</BorderPane>

@@ -3,6 +3,8 @@ package com.arabicpoetry.bll.service;
 import com.arabicpoetry.dal.DAOFactory;
 import com.arabicpoetry.dal.dao.BookDAO;
 import com.arabicpoetry.model.Book;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class BookService {
     private static BookService instance;
     private BookDAO bookDAO;
+    private static final Logger LOGGER = LogManager.getLogger(BookService.class);
 
     // Private constructor for Singleton pattern
     private BookService() throws SQLException {
@@ -29,6 +32,11 @@ public class BookService {
             instance = new BookService();
         }
         return instance;
+    }
+
+    // For tests
+    public static synchronized void resetInstance() {
+        instance = null;
     }
 
     /**
@@ -51,6 +59,7 @@ public class BookService {
     public void createBook(Book book) throws SQLException {
         validateBook(book);
         bookDAO.create(book);
+        LOGGER.info("Created book '{}'", book.getTitle());
     }
 
     /**
@@ -59,6 +68,7 @@ public class BookService {
     public void updateBook(Book book) throws SQLException {
         validateBook(book);
         bookDAO.update(book);
+        LOGGER.info("Updated book '{}'", book.getTitle());
     }
 
     /**
@@ -66,6 +76,7 @@ public class BookService {
      */
     public void deleteBook(int id) throws SQLException {
         bookDAO.delete(id);
+        LOGGER.info("Deleted book id={}", id);
     }
 
     /**
@@ -82,5 +93,10 @@ public class BookService {
         if (book.getTitle() == null || book.getTitle().trim().isEmpty()) {
             throw new IllegalArgumentException("Book title cannot be empty");
         }
+    }
+
+    // Package-private for tests
+    void setBookDAO(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
     }
 }

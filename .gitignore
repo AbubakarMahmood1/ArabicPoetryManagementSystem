@@ -1,10 +1,32 @@
 # Java related
 target/
 bin/
+bin-test/
 *.jar
 *.war
 *.ear
 *.class
+
+# Generated application images and runtime
+/ArabicPoetry/
+dist/
+jpackage-input/javafx-bin/
+jpackage-input/runtime/
+
+# Installer payloads / outputs (large binaries)
+/installer/payloads/*.msi
+/installer/payloads/*.zip
+/installer/output/
+/installer/sandbox-share/
+/installer/bootstrapper/*.exe
+!/installer/bootstrapper/ProvisionMySqlRunner.cs
+
+# Local / Temporary Files
+.claude/
+sources.txt
+src/..all_java_files.txt
+*.log
+*.log.*
 
 # Eclipse specific
 .classpath

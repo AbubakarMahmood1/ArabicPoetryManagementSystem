@@ -4,6 +4,8 @@ import com.arabicpoetry.dal.DAOFactory;
 import com.arabicpoetry.dal.dao.UserDAO;
 import com.arabicpoetry.model.User;
 import com.arabicpoetry.util.PasswordUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 
@@ -15,6 +17,7 @@ public class AuthenticationService {
     private static AuthenticationService instance;
     private UserDAO userDAO;
     private User currentUser;
+    private static final Logger LOGGER = LogManager.getLogger(AuthenticationService.class);
 
     // Private constructor for Singleton pattern
     private AuthenticationService() throws SQLException {
@@ -32,6 +35,11 @@ public class AuthenticationService {
         return instance;
     }
 
+    // For tests to get a clean singleton
+    public static synchronized void resetInstance() {
+        instance = null;
+    }
+
     /**
      * Login user with username and password
      * @return User object if successful, null otherwise
@@ -43,9 +51,11 @@ public class AuthenticationService {
             if (PasswordUtil.verifyPassword(password, user.getPasswordHash())) {
                 currentUser = user;
                 userDAO.updateLastLogin(user.getUserId());
+                LOGGER.info("User '{}' logged in.", username);
                 return user;
             }
         }
+        LOGGER.warn("Failed login attempt for user '{}'", username);
         return null;
     }
 
@@ -53,6 +63,9 @@ public class AuthenticationService {
      * Logout current user
      */
     public void logout() {
+        if (currentUser != null) {
+            LOGGER.info("User '{}' logged out.", currentUser.getUsername());
+        }
         currentUser = null;
     }
 
@@ -80,5 +93,11 @@ public class AuthenticationService {
         user.setFullName(fullName);
         user.setActive(true);
         userDAO.create(user);
+        LOGGER.info("Registered new user '{}'", username);
+    }
+
+    // Package-private for tests to inject a mock DAO
+    void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 }

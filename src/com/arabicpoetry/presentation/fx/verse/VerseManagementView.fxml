@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.arabicpoetry.presentation.fx.verse.VerseManagementController"
+            prefWidth="1000" prefHeight="600">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <top>
+        <VBox spacing="10">
+            <TitledPane text="Verse Details" expanded="true">
+                <content>
+                    <BorderPane>
+                        <center>
+                            <GridPane hgap="8" vgap="8">
+                                <columnConstraints>
+                                    <ColumnConstraints minWidth="120"/>
+                                    <ColumnConstraints hgrow="ALWAYS"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
+
+                                <Label text="Poem:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="poemCombo" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                <Label text="Verse Number:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <TextField fx:id="verseNumberField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                <Label text="Text:" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.valignment="TOP"/>
+                                <TextArea fx:id="textArea" prefRowCount="4" wrapText="true"
+                                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            </GridPane>
+                        </center>
+                        <bottom>
+                            <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10 0 0 0;">
+                                <Button text="Add" onAction="#handleAdd"/>
+                                <Button text="Update" onAction="#handleUpdate"/>
+                                <Button text="Delete" onAction="#handleDelete"/>
+                                <Button text="Clear" onAction="#handleClear"/>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </content>
+            </TitledPane>
+        </VBox>
+    </top>
+    <center>
+        <BorderPane>
+            <top>
+                <HBox spacing="8" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 0;">
+                    <Label text="Search:"/>
+                    <TextField fx:id="searchField" prefWidth="180"/>
+                    <Button text="Search" onAction="#handleSearch"/>
+                    <Button text="Refresh" onAction="#handleRefresh"/>
+                </HBox>
+            </top>
+            <center>
+                <TableView fx:id="verseTable">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="60"/>
+                        <TableColumn fx:id="poemColumn" text="Poem" prefWidth="240"/>
+                        <TableColumn fx:id="numberColumn" text="Verse #" prefWidth="100"/>
+                        <TableColumn fx:id="textColumn" text="Text" prefWidth="400"/>
+                    </columns>
+                </TableView>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

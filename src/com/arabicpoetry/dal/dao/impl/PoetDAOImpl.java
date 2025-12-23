@@ -3,6 +3,8 @@ package com.arabicpoetry.dal.dao.impl;
 import com.arabicpoetry.dal.dao.PoetDAO;
 import com.arabicpoetry.model.Poet;
 import com.arabicpoetry.util.DatabaseConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,9 +15,14 @@ import java.util.List;
  */
 public class PoetDAOImpl implements PoetDAO {
     private Connection connection;
+    private static final Logger LOGGER = LogManager.getLogger(PoetDAOImpl.class);
+
+    public PoetDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     public PoetDAOImpl() throws SQLException {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+        this(DatabaseConnection.getInstance().getConnection());
     }
 
     @Override
@@ -72,6 +79,7 @@ public class PoetDAOImpl implements PoetDAO {
                 poet.setPoetId(rs.getInt(1));
             }
         }
+        LOGGER.info("Inserted poet '{}'", poet.getName());
     }
 
     @Override
@@ -85,6 +93,7 @@ public class PoetDAOImpl implements PoetDAO {
             stmt.setInt(5, poet.getPoetId());
             stmt.executeUpdate();
         }
+        LOGGER.info("Updated poet id={}", poet.getPoetId());
     }
 
     @Override
@@ -94,6 +103,7 @@ public class PoetDAOImpl implements PoetDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
+        LOGGER.info("Deleted poet id={}", id);
     }
 
     @Override

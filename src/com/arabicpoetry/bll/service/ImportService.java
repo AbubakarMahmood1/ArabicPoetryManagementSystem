@@ -4,6 +4,8 @@ import com.arabicpoetry.model.Book;
 import com.arabicpoetry.model.Poet;
 import com.arabicpoetry.model.Poem;
 import com.arabicpoetry.model.Verse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -26,9 +28,11 @@ public class ImportService {
     private PoetService poetService;
     private PoemService poemService;
     private VerseService verseService;
+    private static final Logger LOGGER = LogManager.getLogger(ImportService.class);
 
     // Regex patterns for parsing
-    private static final Pattern BOOK_TITLE_PATTERN = Pattern.compile("الكتاب\\s*:\\s*(.+)");
+    // Match any line containing a colon and capture the book title after it to handle varied prefixes.
+    private static final Pattern BOOK_TITLE_PATTERN = Pattern.compile("^.+?:\\s*(.+)$");
     private static final Pattern POEM_TITLE_PATTERN = Pattern.compile("\\[(.+)\\]");
     private static final Pattern VERSE_PATTERN = Pattern.compile("\\(([^)]+)\\)");
     private static final String FOOTNOTE_DELIMITER = "_________";
@@ -129,6 +133,7 @@ public class ImportService {
                     poemService.createPoem(currentPoem);
                     poemsImported++;
                     verseNumber = 0;
+                    LOGGER.info("Imported poem '{}'", poemTitle);
                     continue;
                 }
 
@@ -150,18 +155,22 @@ public class ImportService {
                     verse.setText(fullVerse);
                     verseService.createVerse(verse);
                     versesImported++;
+                    LOGGER.debug("Imported verse {} for poem '{}'", verseNumber, currentPoem.getTitle());
 
                     versePartsBuffer.clear();
                 }
             }
         }
 
-        return String.format("Import completed successfully!\n" +
-                "Books: %d\n" +
-                "Poets: %d\n" +
-                "Poems: %d\n" +
-                "Verses: %d",
+        String summary = String.format("Import completed successfully!\n" +
+                        "Books: %d\n" +
+                        "Poets: %d\n" +
+                        "Poems: %d\n" +
+                        "Verses: %d",
                 booksImported, poetsImported, poemsImported, versesImported);
+        LOGGER.info("Import summary - Books: {}, Poets: {}, Poems: {}, Verses: {}",
+                booksImported, poetsImported, poemsImported, versesImported);
+        return summary;
     }
 
     /**
@@ -204,8 +213,9 @@ public class ImportService {
             }
         }
 
+        // Fallback: if no poet name could be parsed, use a default placeholder
         if (poetName == null || poetName.isEmpty()) {
-            return null;
+            poetName = "Unknown Poet";
         }
 
         // Check if poet exists
@@ -222,5 +232,22 @@ public class ImportService {
         poet.setDeathYear("غير معروف");
         poetService.createPoet(poet);
         return poet;
+    }
+
+    // Package-private setters for tests
+    void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    void setPoetService(PoetService poetService) {
+        this.poetService = poetService;
+    }
+
+    void setPoemService(PoemService poemService) {
+        this.poemService = poemService;
+    }
+
+    void setVerseService(VerseService verseService) {
+        this.verseService = verseService;
     }
 }

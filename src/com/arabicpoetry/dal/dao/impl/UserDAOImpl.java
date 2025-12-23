@@ -3,6 +3,8 @@ package com.arabicpoetry.dal.dao.impl;
 import com.arabicpoetry.dal.dao.UserDAO;
 import com.arabicpoetry.model.User;
 import com.arabicpoetry.util.DatabaseConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,9 +15,14 @@ import java.util.List;
  */
 public class UserDAOImpl implements UserDAO {
     private Connection connection;
+    private static final Logger LOGGER = LogManager.getLogger(UserDAOImpl.class);
+
+    public UserDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     public UserDAOImpl() throws SQLException {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+        this(DatabaseConnection.getInstance().getConnection());
     }
 
     @Override
@@ -72,6 +79,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setUserId(rs.getInt(1));
             }
         }
+        LOGGER.info("Inserted user '{}'", user.getUsername());
     }
 
     @Override
@@ -85,6 +93,7 @@ public class UserDAOImpl implements UserDAO {
             stmt.setInt(5, user.getUserId());
             stmt.executeUpdate();
         }
+        LOGGER.info("Updated user id={}", user.getUserId());
     }
 
     @Override
@@ -94,6 +103,7 @@ public class UserDAOImpl implements UserDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
+        LOGGER.info("Deleted user id={}", id);
     }
 
     @Override
@@ -103,6 +113,7 @@ public class UserDAOImpl implements UserDAO {
             stmt.setInt(1, userId);
             stmt.executeUpdate();
         }
+        LOGGER.info("Updated last login for user id={}", userId);
     }
 
     private User mapResultSetToUser(ResultSet rs) throws SQLException {

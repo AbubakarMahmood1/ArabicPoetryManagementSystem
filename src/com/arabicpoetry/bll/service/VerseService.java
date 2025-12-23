@@ -3,6 +3,8 @@ package com.arabicpoetry.bll.service;
 import com.arabicpoetry.dal.DAOFactory;
 import com.arabicpoetry.dal.dao.VerseDAO;
 import com.arabicpoetry.model.Verse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class VerseService {
     private static VerseService instance;
     private VerseDAO verseDAO;
+    private static final Logger LOGGER = LogManager.getLogger(VerseService.class);
 
     // Private constructor for Singleton pattern
     private VerseService() throws SQLException {
@@ -29,6 +32,11 @@ public class VerseService {
             instance = new VerseService();
         }
         return instance;
+    }
+
+    // For tests
+    public static synchronized void resetInstance() {
+        instance = null;
     }
 
     /**
@@ -58,6 +66,7 @@ public class VerseService {
     public void createVerse(Verse verse) throws SQLException {
         validateVerse(verse);
         verseDAO.create(verse);
+        LOGGER.info("Created verse {}", verse.getVerseNumber());
     }
 
     /**
@@ -66,6 +75,7 @@ public class VerseService {
     public void updateVerse(Verse verse) throws SQLException {
         validateVerse(verse);
         verseDAO.update(verse);
+        LOGGER.info("Updated verse {}", verse.getVerseNumber());
     }
 
     /**
@@ -73,6 +83,7 @@ public class VerseService {
      */
     public void deleteVerse(int id) throws SQLException {
         verseDAO.delete(id);
+        LOGGER.info("Deleted verse id={}", id);
     }
 
     /**
@@ -80,6 +91,7 @@ public class VerseService {
      */
     public void deleteVersesByPoem(int poemId) throws SQLException {
         verseDAO.deleteByPoem(poemId);
+        LOGGER.info("Deleted verses for poem id={}", poemId);
     }
 
     /**
@@ -99,5 +111,10 @@ public class VerseService {
         if (verse.getVerseNumber() <= 0) {
             throw new IllegalArgumentException("Verse number must be positive");
         }
+    }
+
+    // Package-private for tests
+    void setVerseDAO(VerseDAO verseDAO) {
+        this.verseDAO = verseDAO;
     }
 }

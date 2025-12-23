@@ -3,6 +3,8 @@ package com.arabicpoetry.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Singleton class for managing database connections
@@ -12,16 +14,17 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
     private Connection connection;
     private DatabaseConfig config;
+    private static final Logger LOGGER = LogManager.getLogger(DatabaseConnection.class);
+    private static DatabaseConfig overrideConfig;
 
     // Private constructor for Singleton pattern
     private DatabaseConnection() {
-        config = DatabaseConfig.getInstance();
+        config = overrideConfig != null ? overrideConfig : DatabaseConfig.getInstance();
         try {
             // Load MySQL JDBC driver
             Class.forName(config.getDbDriver());
         } catch (ClassNotFoundException e) {
-            System.err.println("MySQL JDBC Driver not found: " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.error("MySQL JDBC Driver not found: {}", config.getDbDriver(), e);
         }
     }
 
@@ -33,6 +36,34 @@ public class DatabaseConnection {
             instance = new DatabaseConnection();
         }
         return instance;
+    }
+
+    /**
+     * Point the connection factory at a specific DatabaseConfig (e.g., for tests) and reset any cached connection.
+     */
+    public static synchronized void configure(DatabaseConfig databaseConfig) {
+        overrideConfig = databaseConfig;
+        reset();
+    }
+
+    /**
+     * Force the connection factory to reload using a given properties file (prod/test switch).
+     */
+    public static synchronized void useConfigFile(String path) {
+        overrideConfig = null;
+        DatabaseConfig.reset();
+        DatabaseConfig.useConfigFile(path);
+        reset();
+    }
+
+    /**
+     * Reset the singleton/connection so the next request rebuilds from the latest configuration.
+     */
+    public static synchronized void reset() {
+        if (instance != null) {
+            instance.closeConnection();
+        }
+        instance = null;
     }
 
     /**
@@ -59,9 +90,9 @@ public class DatabaseConnection {
         if (connection != null) {
             try {
                 connection.close();
-                System.out.println("Database connection closed.");
+                LOGGER.info("Database connection closed.");
             } catch (SQLException e) {
-                System.err.println("Error closing database connection: " + e.getMessage());
+                LOGGER.error("Error closing database connection", e);
             }
         }
     }
@@ -74,7 +105,7 @@ public class DatabaseConnection {
             Connection conn = getConnection();
             return conn != null && !conn.isClosed();
         } catch (SQLException e) {
-            System.err.println("Database connection test failed: " + e.getMessage());
+            LOGGER.error("Database connection test failed", e);
             return false;
         }
     }

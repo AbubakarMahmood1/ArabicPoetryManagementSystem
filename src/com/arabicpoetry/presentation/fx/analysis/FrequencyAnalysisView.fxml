@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.arabicpoetry.presentation.fx.analysis.FrequencyAnalysisController"
+            prefWidth="750" prefHeight="550">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <top>
+        <VBox spacing="10">
+            <Label text="Frequency Analysis" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <GridPane hgap="8" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="80"/>
+                    <ColumnConstraints prefWidth="180"/>
+                    <ColumnConstraints minWidth="80"/>
+                    <ColumnConstraints prefWidth="180"/>
+                    <ColumnConstraints minWidth="80"/>
+                    <ColumnConstraints prefWidth="180"/>
+                </columnConstraints>
+
+                <Label text="Scope:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="scopeCombo" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Select:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <ComboBox fx:id="itemCombo" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="Type:" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                <ComboBox fx:id="typeCombo" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+            </GridPane>
+            <HBox spacing="10">
+                <Button fx:id="analyzeButton" text="Analyze" onAction="#handleAnalyze"/>
+                <Button fx:id="clearButton" text="Clear"/>
+                <ProgressIndicator fx:id="progressIndicator" prefWidth="18" prefHeight="18" visible="false"/>
+                <Label fx:id="statusLabel" text="Ready"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="resultTable">
+            <columns>
+                <TableColumn fx:id="rankColumn" text="Rank" prefWidth="60"/>
+                <TableColumn fx:id="termColumn" text="Term" prefWidth="400"/>
+                <TableColumn fx:id="freqColumn" text="Frequency" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

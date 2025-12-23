@@ -3,6 +3,8 @@ package com.arabicpoetry.bll.service;
 import com.arabicpoetry.dal.DAOFactory;
 import com.arabicpoetry.dal.dao.PoemDAO;
 import com.arabicpoetry.model.Poem;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class PoemService {
     private static PoemService instance;
     private PoemDAO poemDAO;
+    private static final Logger LOGGER = LogManager.getLogger(PoemService.class);
 
     // Private constructor for Singleton pattern
     private PoemService() throws SQLException {
@@ -29,6 +32,11 @@ public class PoemService {
             instance = new PoemService();
         }
         return instance;
+    }
+
+    // For tests
+    public static synchronized void resetInstance() {
+        instance = null;
     }
 
     /**
@@ -65,6 +73,7 @@ public class PoemService {
     public void createPoem(Poem poem) throws SQLException {
         validatePoem(poem);
         poemDAO.create(poem);
+        LOGGER.info("Created poem '{}'", poem.getTitle());
     }
 
     /**
@@ -73,6 +82,7 @@ public class PoemService {
     public void updatePoem(Poem poem) throws SQLException {
         validatePoem(poem);
         poemDAO.update(poem);
+        LOGGER.info("Updated poem '{}'", poem.getTitle());
     }
 
     /**
@@ -80,6 +90,7 @@ public class PoemService {
      */
     public void deletePoem(int id) throws SQLException {
         poemDAO.delete(id);
+        LOGGER.info("Deleted poem id={}", id);
     }
 
     /**
@@ -96,5 +107,10 @@ public class PoemService {
         if (poem.getTitle() == null || poem.getTitle().trim().isEmpty()) {
             throw new IllegalArgumentException("Poem title cannot be empty");
         }
+    }
+
+    // Package-private for tests
+    void setPoemDAO(PoemDAO poemDAO) {
+        this.poemDAO = poemDAO;
     }
 }

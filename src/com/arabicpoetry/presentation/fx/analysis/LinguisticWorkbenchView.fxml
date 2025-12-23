@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.arabicpoetry.presentation.fx.analysis.LinguisticWorkbenchController"
+            prefWidth="1100" prefHeight="650">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <top>
+        <VBox spacing="6">
+            <Label text="Linguistic Workbench" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <ProgressIndicator fx:id="progressIndicator" prefWidth="18" prefHeight="18" visible="false"/>
+                <Label fx:id="statusLabel" text="Ready"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <BorderPane>
+            <left>
+                <TabPane fx:id="browseTabs" prefWidth="250">
+                    <tabs>
+                        <Tab text="Tokens">
+                            <ListView fx:id="tokenList"/>
+                        </Tab>
+                        <Tab text="Lemmas">
+                            <ListView fx:id="lemmaList"/>
+                        </Tab>
+                        <Tab text="Roots">
+                            <ListView fx:id="rootList"/>
+                        </Tab>
+                        <Tab text="Segments">
+                            <ListView fx:id="segmentList"/>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </left>
+            <center>
+                <VBox spacing="10">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Mode:"/>
+                        <ComboBox fx:id="modeCombo" prefWidth="160"/>
+                        <Label text="Query:"/>
+                        <TextField fx:id="queryField" prefWidth="260"/>
+                        <Button fx:id="searchButton" text="Search" onAction="#handleAnalyze"/>
+                        <Button fx:id="clearButton" text="Clear"/>
+                        <Button fx:id="refreshButton" text="Refresh Index"/>
+                    </HBox>
+                    <TableView fx:id="resultTable">
+                        <columns>
+                            <TableColumn fx:id="poemColumn" text="Poem" prefWidth="180"/>
+                            <TableColumn fx:id="verseNumberColumn" text="Verse #" prefWidth="80"/>
+                            <TableColumn fx:id="tokenColumn" text="Token / Match" prefWidth="140"/>
+                            <TableColumn fx:id="lemmaColumn" text="Lemma(s)" prefWidth="160"/>
+                            <TableColumn fx:id="rootColumn" text="Root(s)" prefWidth="140"/>
+                            <TableColumn fx:id="segmentColumn" text="Segments" prefWidth="140"/>
+                            <TableColumn fx:id="posColumn" text="POS / Mode" prefWidth="120"/>
+                            <TableColumn fx:id="verseTextColumn" text="Verse Text" prefWidth="400"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

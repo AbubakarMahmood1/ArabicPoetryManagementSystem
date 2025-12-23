@@ -2,12 +2,31 @@
 
 ## Prerequisites
 
-1. **Java Development Kit (JDK)**: JDK 8 or higher
+### For evaluators (Windows installer)
+- No Java/MySQL preinstall required: use `installer/output/ArabicPoetrySetup.exe` (bundles a JRE and provisions a local MySQL service).
+
+### For developers (running from source)
+1. **Java Development Kit (JDK)**: 21+ (22 tested)
 2. **MySQL Server**: Version 5.7 or higher
 3. **Eclipse IDE**: Any recent version
-4. **MySQL JDBC Driver**: mysql-connector-java-8.0.x.jar
+4. **MySQL JDBC Driver**: already bundled in `lib/mysql-connector-j-9.5.0.jar`
+
+## Windows Installer (Recommended)
+1. Build the bootstrapper on the build machine:
+   - Build MSI: `scripts/make-msi.cmd`
+   - Put MySQL "noinstall" ZIP at `installer/payloads/mysql.zip`
+   - Build EXE: `pwsh scripts/build-bootstrapper.ps1`
+2. Run `installer/output/ArabicPoetrySetup.exe` on the target machine.
+   - The installer provisions a local MySQL service `ArabicPoetryMySQL`, applies `database/schema-install.sql`, and writes the installed `config.properties` automatically.
+
+### Testing in Windows Sandbox (recommended)
+1. Reboot once after enabling the Windows Sandbox feature in Windows.
+2. Double-click `ArabicPoetrySandbox.wsb` (repo root). The installer starts inside the sandbox.
+3. Complete install (enter a DB password or leave blank to auto-generate), then launch the app and login `admin` / `admin123`.
 
 ## Database Setup
+
+> Skip this section if you use the Windows installer. It provisions a local MySQL automatically.
 
 1. **Install and Start MySQL Server**
    - Make sure MySQL server is running on your machine

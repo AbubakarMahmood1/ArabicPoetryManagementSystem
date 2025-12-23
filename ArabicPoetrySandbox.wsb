@@ -1,0 +1,23 @@
+<Configuration>
+  <Networking>Disable</Networking>
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>C:\Users\theab\OneDrive\Desktop\New Folder\ArabicPoetryManagementSystem\installer\output</HostFolder>
+      <SandboxFolder>C:\Users\WDAGUtilityAccount\Desktop\ArabicPoetryInstaller</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>C:\Users\theab\OneDrive\Desktop\New Folder\ArabicPoetryManagementSystem\installer\sandbox-share</HostFolder>
+      <SandboxFolder>C:\Users\WDAGUtilityAccount\Desktop\ArabicPoetryLogs</SandboxFolder>
+      <ReadOnly>false</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>C:\Users\theab\OneDrive\Desktop\New Folder\ArabicPoetryManagementSystem\installer\sandbox-share\appdata-local</HostFolder>
+      <SandboxFolder>C:\Users\WDAGUtilityAccount\AppData\Local\ArabicPoetry</SandboxFolder>
+      <ReadOnly>false</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+  <LogonCommand>
+    <Command>cmd.exe /c start "" "C:\Users\WDAGUtilityAccount\Desktop\ArabicPoetryInstaller\ArabicPoetrySetup.exe" /log "C:\Users\WDAGUtilityAccount\Desktop\ArabicPoetryLogs\ArabicPoetrySetup.log"</Command>
+  </LogonCommand>
+</Configuration>

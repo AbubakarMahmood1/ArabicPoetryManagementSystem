@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.arabicpoetry.presentation.fx.analysis.BookIndexController"
+            prefWidth="950" prefHeight="600">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <top>
+        <VBox spacing="10">
+            <Label text="Book Index Generator" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Book:"/>
+                <ComboBox fx:id="bookCombo" prefWidth="200"/>
+                <Label text="Type:"/>
+                <ComboBox fx:id="typeCombo" prefWidth="140"/>
+                <Button fx:id="generateButton" text="Generate Index" onAction="#handleGenerate"/>
+                <Button fx:id="clearButton" text="Clear"/>
+                <ProgressIndicator fx:id="progressIndicator" prefWidth="18" prefHeight="18" visible="false"/>
+                <Label fx:id="statusLabel" text="Ready"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane>
+            <items>
+                <VBox spacing="6">
+                    <Label text="Terms"/>
+                    <ListView fx:id="termList" />
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Occurrences"/>
+                    <TableView fx:id="occurrenceTable">
+                        <columns>
+                            <TableColumn fx:id="verseIdColumn" text="Verse ID" prefWidth="100"/>
+                            <TableColumn fx:id="poemIdColumn" text="Poem ID" prefWidth="100"/>
+                            <TableColumn fx:id="positionColumn" text="Position" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>

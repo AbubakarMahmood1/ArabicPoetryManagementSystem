@@ -3,6 +3,8 @@ package com.arabicpoetry.bll.service;
 import com.arabicpoetry.dal.DAOFactory;
 import com.arabicpoetry.dal.dao.PoetDAO;
 import com.arabicpoetry.model.Poet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class PoetService {
     private static PoetService instance;
     private PoetDAO poetDAO;
+    private static final Logger LOGGER = LogManager.getLogger(PoetService.class);
 
     // Private constructor for Singleton pattern
     private PoetService() throws SQLException {
@@ -29,6 +32,11 @@ public class PoetService {
             instance = new PoetService();
         }
         return instance;
+    }
+
+    // For tests
+    public static synchronized void resetInstance() {
+        instance = null;
     }
 
     /**
@@ -58,6 +66,7 @@ public class PoetService {
     public void createPoet(Poet poet) throws SQLException {
         validatePoet(poet);
         poetDAO.create(poet);
+        LOGGER.info("Created poet '{}'", poet.getName());
     }
 
     /**
@@ -66,6 +75,7 @@ public class PoetService {
     public void updatePoet(Poet poet) throws SQLException {
         validatePoet(poet);
         poetDAO.update(poet);
+        LOGGER.info("Updated poet '{}'", poet.getName());
     }
 
     /**
@@ -73,6 +83,7 @@ public class PoetService {
      */
     public void deletePoet(int id) throws SQLException {
         poetDAO.delete(id);
+        LOGGER.info("Deleted poet id={}", id);
     }
 
     /**
@@ -89,5 +100,10 @@ public class PoetService {
         if (poet.getName() == null || poet.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("Poet name cannot be empty");
         }
+    }
+
+    // Package-private for tests
+    void setPoetDAO(PoetDAO poetDAO) {
+        this.poetDAO = poetDAO;
     }
 }

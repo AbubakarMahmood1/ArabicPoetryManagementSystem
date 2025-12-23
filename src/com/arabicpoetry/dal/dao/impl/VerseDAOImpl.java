@@ -3,6 +3,8 @@ package com.arabicpoetry.dal.dao.impl;
 import com.arabicpoetry.dal.dao.VerseDAO;
 import com.arabicpoetry.model.Verse;
 import com.arabicpoetry.util.DatabaseConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,9 +15,14 @@ import java.util.List;
  */
 public class VerseDAOImpl implements VerseDAO {
     private Connection connection;
+    private static final Logger LOGGER = LogManager.getLogger(VerseDAOImpl.class);
+
+    public VerseDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     public VerseDAOImpl() throws SQLException {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+        this(DatabaseConnection.getInstance().getConnection());
     }
 
     @Override
@@ -81,6 +88,7 @@ public class VerseDAOImpl implements VerseDAO {
                 verse.setVerseId(rs.getInt(1));
             }
         }
+        LOGGER.info("Inserted verse {} for poem {}", verse.getVerseNumber(), verse.getPoemId());
     }
 
     @Override
@@ -93,6 +101,7 @@ public class VerseDAOImpl implements VerseDAO {
             stmt.setInt(4, verse.getVerseId());
             stmt.executeUpdate();
         }
+        LOGGER.info("Updated verse id={}", verse.getVerseId());
     }
 
     @Override
@@ -102,6 +111,7 @@ public class VerseDAOImpl implements VerseDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
+        LOGGER.info("Deleted verse id={}", id);
     }
 
     @Override
@@ -111,6 +121,7 @@ public class VerseDAOImpl implements VerseDAO {
             stmt.setInt(1, poemId);
             stmt.executeUpdate();
         }
+        LOGGER.info("Deleted verses for poem id={}", poemId);
     }
 
     @Override
